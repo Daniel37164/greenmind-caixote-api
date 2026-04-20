@@ -5,18 +5,22 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  async function loadData() {
-    try {
-      const res = await fetch("https://greenmind-caixote-api-1.onrender.com/status");
-      const json = await res.json();
-      console.log("API DATA:", json);
-      setData(json);
-    } catch (err) {
-      console.log("ERRO API:", err);
-    }
-  }
+  console.log("USEEFFECT EXECUTOU");
 
-  loadData();
+  fetch("https://greenmind-caixote-api-1.onrender.com/status")
+    .then((res) => {
+      console.log("STATUS:", res.status);
+      return res.json();
+    })
+    .then((data) => {
+      console.log("DATA RECEBIDA:", data);
+      setData(data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log("ERRO FETCH:", err);
+      setLoading(false);
+    });
 }, []);
 
   return (
